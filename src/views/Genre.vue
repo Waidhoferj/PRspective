@@ -14,8 +14,10 @@
                     <span class="genre-title">{{$route.params.id}}</span>
         </div>
 </nav>
-    <div class="stories"></div>
-        <story></story>
+    <div class="stories">
+        <story v-for="story in stories" :storyData="story"></story>
+    </div>
+        
 </div>
 
 </template>
@@ -35,6 +37,11 @@ export default {
     methods: {
         goBack () {
             this.$router.go(-1)
+        }
+    },
+    computed: {
+        stories () {
+            return this.$store.state.feed
         }
     }
 }
@@ -64,13 +71,17 @@ export default {
     }
 
 .icon-padded {
-    border: 1px solid black;
     padding-top:100px;
 }
 
 .stories {
-    width: 100%
-    disp
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    min-height: 100vh;
+    margin: auto;
+    text-align: center;
+    border-top: 1px solid black;
 }
 </style>
 

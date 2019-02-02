@@ -18,7 +18,7 @@
           <h2>{{mainStory.title}}</h2>
         <div class="main-views">
           <div class="main-view-el" v-for="view in  mainStory.views">
-              {{view.description}} +{{view.sources.length}}
+             <span class="feed-view white"> {{view.description}} <div class="counter-circle" @click="openSources(view.sources)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
           </div>
         </div>
         </div>
@@ -38,36 +38,36 @@
     <ul class="feed-list">
     <li v-for="data in feedData" class="feed-list-el">
       <span class="feed-title">{{data.title}}</span>
-      <span class="feed-view" v-for="response in data.responses">{{response.title}} <div class="counter">{{response.number}}</div></span>
-      <div class="counter"></div>
+      <span class="feed-view" v-for="view in data.views">{{view.description}} <div class="counter-circle"><span class="counter-num"> {{view.sources.length}} </span></div></span>
 
     </li>
     </ul>
   </div>
+
+<sidebar :sources="selectedSources.sources" :issue="selectedSources.title" @focus="openSources" @blur="closeSources" v-if="sidebarIsHidden" ref="sidebar"></sidebar>
+
 </div>
 </template>
 
 <script>
 import Category from "@/components/Category.vue"
+import Sidebar from "@/components/Sidebar.vue"
 
 export default {
   name: 'home',
   data () {
     return {
       searchText: "",
-      feedData: [
-        {title: "Trump Adds Tarrifs", responses: [{title:"thats good", number: 50}, {title: "thats bad", number: 55}]},
-        {title: "Trump Adds Tarrifs", responses: [{title:"thats good", number: 50}, {title: "thats bad", number: 55}]},
-        {title: "Trump Adds Tarrifs", responses: [{title:"thats good", number: 50}, {title: "thats bad", number: 55}]},
-        {title: "Trump Adds Tarrifs", responses: [{title:"thats good", number: 50}, {title: "thats bad", number: 55}]}
-      ]
+      selectedSources: [{name: "Default", link: "http://www.google.com"}],
+      sidebarIsHidden: true,
     }
   },
   created() {
     console.log(this.$route.params.id)
   },
   components: {
-    Category
+    Category,
+    Sidebar
   },
   computed: {
     mainImageURL() {
@@ -78,14 +78,26 @@ export default {
     categories () {
       return this.$store.state.categories
     },
+
     mainStory () {
       return this.$store.state.mainStory
-    }
+    },
+    feedData () {
+    return this.$store.state.feed
+  }
   },
+  
   methods: {
     goToGenre (genre) {
       console.log()
       this.$router.push("/genre/" + genre.toLowerCase())
+    },
+    openSources(sources, title) {
+      this.selectedSources = {sources,title}
+      this.sidebarIsHidden = false
+    },
+    closeSources() {
+      this.sidebarIsHidden = true
     }
   }
 }
@@ -180,6 +192,7 @@ input {
   border: none;
 }
 
+
 .categories {
   margin-top: 30px;
   padding: 20px;
@@ -221,6 +234,10 @@ input {
 .black {
   color: black;
 }
+
+.white {
+  color: white;
+}
 .feed-title {
 font-size: 25px;
 width: 100%;
@@ -233,14 +250,23 @@ width: 100%;
 padding: 10px 0;
 }
 
-.counter {
-  display: inline;
+.counter-circle {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
   color:white;
   background: green;
   border-radius:  50%;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   font-size: 20px;
+}
+
+.counter-num {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
 }
 
 .main-responses {

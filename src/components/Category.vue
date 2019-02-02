@@ -30,6 +30,7 @@ export default {
     }
 
     .title {
+    cursor: pointer;
     color: white;
     font-size: 30px;
 	position:absolute;

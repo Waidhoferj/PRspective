@@ -23,12 +23,32 @@ export default new Vuex.Store({
       image: "https://images.unsplash.com/photo-1519851814087-c58f18889edf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
       views: [{description: "The wall should not be built", sources: [{name: "CNN", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
     },
-    searchResults: [
+    feed: [
       {
         title: "This is something else",
-        image: "",
-        views: [{desciption: "The wall should not be built"}, {desciption: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
-      }
+        image: "https://images.unsplash.com/photo-1549046675-dd779977de88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2826&q=80",
+        views: [{description: "The wall should not be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
+      },
+      {
+        title: "This is something else",
+        image: "https://images.unsplash.com/photo-1548840775-2061c538a687?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80",
+        views: [{description: "The wall should not be built", sources: [{name: "Fox News", link: "http://www.google.com"}, {name: "Fox News", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
+      },
+      {
+        title: "This is something else",
+        image: "https://images.unsplash.com/photo-1549046675-dd779977de88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2826&q=80",
+        views: [{description: "The wall should not be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
+      },
+      {
+        title: "This is something else",
+        image: "https://images.unsplash.com/photo-1549046675-dd779977de88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2826&q=80",
+        views: [{description: "The wall should not be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
+      },
+      {
+        title: "This is something else",
+        image: "https://images.unsplash.com/photo-1549046675-dd779977de88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2826&q=80",
+        views: [{description: "The wall should not be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}, {description: "The wall must be built", sources: [{name: "Fox News", link: "http://www.google.com"}]}]
+      },
     ]
 
     
