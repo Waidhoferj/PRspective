@@ -15,9 +15,20 @@ export default new Router({
       component: Home
     },
     {
-      path: '/:genre',
+      path: '/genre/:id',
       name: 'genre',
+      beforeEach(to, form, next){
+        let categories = ["tech", "money", "politics", "global", "entertainment", "sports","other", "health", "travel"]
+          if (categories.includes(to.params.id)) {
+            next()
+          }
+        next(false)
+      },
       component: Genre
+    },
+    {
+      path: "*",
+      component: Home
     }
   ]
 })
