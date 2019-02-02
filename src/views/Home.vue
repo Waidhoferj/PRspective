@@ -5,7 +5,10 @@
         <h1 class="app-name">Prspective</h1>
           <div class="search-bar search-margin">
             <div class="icon"><img src="../assets/search-icon.svg" alt=""></div>
-            <input type="text" placeholder="type something">
+            <form @submit.prevent="$store.dispatch('search', searchText)">
+              <input v-model="searchText" type="text" placeholder="type something" >
+            </form>
+            
           </div>
     </header>
     <div class="categories">
@@ -49,6 +52,7 @@ export default {
   name: 'home',
   data () {
     return {
+      searchText: "",
       categories: [
         {image: "https://cdn.cnn.com/cnnnext/dam/assets/190202074327-trump-putin-split-0202-medium-tease.jpg", title: "Tech"},
         {image: "https://cdn.cnn.com/cnnnext/dam/assets/171222111337-president-trump-signs-tax-bill-12-22-2017-story-body.jpg", title: "Support"},
@@ -206,6 +210,10 @@ padding: 20px;
   width: 40px;
   height: 40px;
   font-size: 40px;
+}
+
+form {
+  display: inline;
 }
 
 </style>
