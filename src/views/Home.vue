@@ -18,7 +18,7 @@
       </div>
       <div class="genres">
         <!-- Add in the genres here -->
-        <category v-for="category in categories" :key="category.title" :title="category.title" :image="category.image">
+        <category v-for="category in categories" :key="category.title" :title="category.title" :image="'url(' + category.image + ')'">
           {{category}}
         </category>
       </div>
@@ -27,12 +27,14 @@
     
   </div>
   <div class="feed">
+    <h4 class="black">Views</h4>
     <ul>
       <li></li>
     </ul>
     <li v-for="data in feedData">
-      <span>{{data.title}}</span>
-      <span v-for="response in data.responses">{{response.title}} {{response.number}}</span>
+      <span class="feed-title">{{data.title}}</span>
+      <span class="feed-view" v-for="response in data.responses">{{response.title}} <div class="counter">{{response.number}}</div></span>
+      <div class="counter"></div>
 
     </li>
   </div>
@@ -48,8 +50,8 @@ export default {
   data () {
     return {
       categories: [
-        {image: "url('../assets/fillerImg.jpg')", title: "Tech"},
-        {image: "url('../assets/fillerImg.jpg')", title: "Support"},
+        {image: "https://cdn.cnn.com/cnnnext/dam/assets/190202074327-trump-putin-split-0202-medium-tease.jpg", title: "Tech"},
+        {image: "https://cdn.cnn.com/cnnnext/dam/assets/171222111337-president-trump-signs-tax-bill-12-22-2017-story-body.jpg", title: "Support"},
         ],
       feedData: [
         {title: "Trump Adds Tarrifs", responses: [{title:"thats good", number: 50}, {title: "thats bad", number: 55}]}
@@ -184,6 +186,26 @@ input {
   flex-wrap: wrap;
   padding:20px;
 
+}
+
+.black {
+  color: black;
+}
+.feed-title {
+width: 100%;
+padding: 10px;
+}
+.feed-view {
+width: 100%;
+padding: 20px;
+}
+
+.counter {
+  background: green;
+  border-radius:  50%;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
 }
 
 </style>

@@ -1,14 +1,16 @@
 <template>
-    <div class="box">
+    <div class="box" :style="{backgroundImage: image}">
         <span class="title">{{title}}</span>
-        {{image}}
     </div>
 </template>
 
 <script>
 export default {
-    props: [title]
-}
+    props: {title: String,
+            image: String},
+    created () {
+
+    }}
 </script>
 
 <style>

@@ -14,7 +14,9 @@ export default new Vuex.Store({
   },
   actions: {
     search(context, text) {
-      return axios.post("url", {searchText: text})
+      axios.get()
+      return axios.get("url", {searchText: text})
+      
     }
   }
 })
