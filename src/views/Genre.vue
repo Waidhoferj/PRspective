@@ -18,8 +18,8 @@
         <story v-for="story in stories" :storyData="story" @openSources="openSources"></story>
     </div>
 
-    <transition name="slide" mode="out-in">
-<sidebar :sources="selectedSources.sources" :issue="selectedSources.issue" @close="closeSources" v-if="sidebarShown" ref="sidebar"></sidebar>
+    <transition name="fade" mode="out-in">
+<sidebar :sources="selectedSources.sources" :issue="selectedSources.issue" @close="closeSources" v-if="sidebarShown" ></sidebar>
 </transition>
         
 </div>
@@ -40,6 +40,9 @@ export default {
     components: {
         Story,
         Sidebar
+    },
+    mounted () {
+        this.$store.dispatch("refreshGenre", {genre: this.$route.params.id})
     },
     methods: {
         goHome () {
@@ -118,5 +121,12 @@ export default {
     color: #5C1787;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition:opacity 0.5s
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
 

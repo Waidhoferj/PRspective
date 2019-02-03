@@ -9,7 +9,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     avaliableSearches: ["tech", "money", "politics", "global", "entertainment", "sports", "health", "travel"],
-    cycleFeed: false,
     selectedSources: {issue: "blah", sources:[{name: "Default", link: "http://www.google.com"}]},
     categories: [
       {image: "https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80", title: "Tech"},
@@ -183,7 +182,7 @@ export default new Vuex.Store({
         try{
           let res = await axios.get(`/feed/${keyword}.json`)
           state.specifiedFeed = res.data
-          console.log(res.data)
+          
           router.push("/genre/" + keyword.toLowerCase())
         }
         catch(err) {
@@ -202,16 +201,14 @@ export default new Vuex.Store({
           console.log(err)
         }
     },
-    async cycleFeed (context) {
-        let interval = setInterval(() => {
-          context.commit("queueFeed")
-          console.log("interval looped")
-          if (!context.state.cycleFeed) {
-            clearInterval(interval)
-          }
-        }, 1000);
-      
-
+    async refreshGenre ({state}, {genre}) {
+      try {
+        let res = await axios.get(`/feed/${genre}.json`)
+          state.specifiedFeed = res.data
+      } catch (err) {
+        console.log(error)
+      }
     }
+  
   }
 })

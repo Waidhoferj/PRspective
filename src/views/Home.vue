@@ -64,11 +64,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("pullMain")
-    this.$store.dispatch("cycleFeed")
-    console.log("mounted")
-  },
-  beforeDestroy() {
-    this.$store.state.cycleFeed = false
   },
   components: {
     Category,
@@ -77,7 +72,6 @@ export default {
   computed: {
     mainImageURL() {
       const urlString = this.$store.state.mainImage
-      console.log(`url('${urlString}')`)
       return `url('${urlString}')`
     },
     categories () {
@@ -366,26 +360,6 @@ form {
   opacity: 0;
 }
 
-.slide-enter-active {
-
-}
-
- .slide-leave-active {
-  transition:opacity 0.5s
-}
-
-.slide-enter, .slide-leave-to {
-  opacity: 0;
-}
-
-@keyframes slide-in {
-  to {
-
-  }
-  from {
-    
-  }
-}
 
 
 

@@ -18,7 +18,7 @@ export default {
             this.$emit('close')
         },
         determineColor(score) {
-            console.log(score)
+            
             let color
             if (score > -0.25 && score < 0.25) {
                 return "green"
