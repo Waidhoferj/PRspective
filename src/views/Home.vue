@@ -39,7 +39,7 @@
       <transition-group name=group-slide>
     <li v-for="data in feedData" class="feed-list-el" :key="data.title">
       <span class="feed-title">{{data.title}}</span>
-      <span class="feed-view" style="margin: 0px 20px" v-for="view in data.views" :key="view.description">  <div class="side-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div> {{view.description}}</span>
+      <span class="feed-view" style="margin: 10px 20px" v-for="view in data.views" :key="view.description">  <div class="side-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div> {{view.description}}</span>
     </li>
     </transition-group>
     </ul>
@@ -274,7 +274,7 @@ width: 100%;
   display: block;
   position: relative;
   color:white;
-  background: green;
+  background: #5C1787;
   border-radius:  50%;
   width: 30px;
   height: 30px;
