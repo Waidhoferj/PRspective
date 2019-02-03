@@ -30,5 +30,12 @@ export default new Router({
       path: "*",
       component: Home
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPos) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+       resolve ({x: 0, y: 0})
+      }, 250)
+    })
+  },
 })

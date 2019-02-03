@@ -2,11 +2,11 @@
 <div class="view">
     <nav class="genre-head">
         <div class="genre-head-el">
-                    <div class="icon icon-padded" @click="goBack"><img src="../assets/back-icon.svg" alt="back"></div>
+                    <h1 class="small-app-title" @click="goHome">PRspective</h1>
         </div>
         <div class="genre-head-el search-padding">
             <div class="icon"><img src="../assets/search-icon.svg" alt="search"></div>
-            <form @submit.prevent="$store.dispatch('search', searchText)">
+            <form @submit.prevent="search">
               <input v-model="searchText" type="text" placeholder="type something" >
             </form>
         </div>
@@ -15,8 +15,12 @@
         </div>
 </nav>
     <div class="stories">
-        <story v-for="story in stories" :storyData="story"></story>
+        <story v-for="story in stories" :storyData="story" @openSources="openSources"></story>
     </div>
+
+    <transition name="slide" mode="out-in">
+<sidebar :sources="selectedSources.sources" :issue="selectedSources.issue" @close="closeSources" v-if="sidebarShown" ref="sidebar"></sidebar>
+</transition>
         
 </div>
 
@@ -24,24 +28,41 @@
 
 <script>
 import Story from "@/components/Story.vue"
+import Sidebar from "@/components/Sidebar.vue"
 export default {
     
     data () {
         return {
             searchText: "",
+            sidebarShown: false
         }
     },
     components: {
-        Story
+        Story,
+        Sidebar
     },
     methods: {
-        goBack () {
-            this.$router.go(-1)
-        }
+        goHome () {
+            this.$router.push({name: "home"})
+        },
+        closeSources() {
+      this.sidebarShown = false
+    },
+    openSources(sources, title) {
+      this.$store.commit("changeSources", {title, sources})
+      this.sidebarShown = true
+    },
+    search (event) {
+      const keyword = event.target.querySelector("input").value
+      this.$store.dispatch("search", {keyword})
+    }
     },
     computed: {
         stories () {
-            return this.$store.state.feed
+            return this.$store.state.specifiedFeed
+        },
+        selectedSources () {
+            return this.$store.state.selectedSources
         }
     }
 }
@@ -54,6 +75,7 @@ export default {
 }
 
 .genre-head-el {
+    text-align: center;
     position: relative;
     width:33%;
 }
@@ -62,26 +84,33 @@ export default {
 	font-size: 100px;
 	font-weight: 500;
 	line-height: 164px;
-    width:100%;
-    margin-left: 50px;
+    
     }
     
  .search-padding {
      padding-top: 60px;
     }
 
-.icon-padded {
-    padding-top:100px;
-}
-
 .stories {
     display: flex;
+    justify-content: center;
+    align-content: flex-start;
     flex-wrap: wrap;
     width: 90%;
     min-height: 100vh;
     margin: auto;
+    padding-top: 50px;
     text-align: center;
     border-top: 1px solid black;
+}
+
+.small-app-title {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-top: 60px;
+    font-size: 40px;
+    cursor: pointer;
 }
 </style>
 

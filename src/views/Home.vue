@@ -5,7 +5,7 @@
         <h1 class="app-title">PRspective</h1>
           <div class="search-bar search-margin">
             <div class="icon"><img src="../assets/search-icon.svg" alt="search"></div>
-            <form @submit.prevent="$store.dispatch('search', searchText)">
+            <form @submit.prevent="search">
               <input v-model="searchText" type="text" placeholder="type something" >
             </form>
             
@@ -18,7 +18,7 @@
           <h2>{{mainStory.title}}</h2>
         <div class="main-views">
           <div class="main-view-el" v-for="view in  mainStory.views">
-             <span class="feed-view white"> {{view.description}} <div class="counter-circle" @click="openSources(view.sources)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
+             <span class="feed-view white"> {{view.description}} <div class="counter-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
           </div>
         </div>
         </div>
@@ -34,18 +34,18 @@
     
   </div>
   <div class="feed">
-    <h4 class="black">Views</h4>
+    <h4 class="black">Feed</h4>
     <ul class="feed-list">
     <li v-for="data in feedData" class="feed-list-el">
       <span class="feed-title">{{data.title}}</span>
-      <span class="feed-view" v-for="view in data.views">{{view.description}} <div class="counter-circle"><span class="counter-num"> {{view.sources.length}} </span></div></span>
+      <span class="feed-view" v-for="view in data.views">{{view.description}} <div class="counter-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
 
     </li>
     </ul>
   </div>
-
-<sidebar :sources="selectedSources.sources" :issue="selectedSources.title" @focus="openSources" @blur="closeSources" v-if="sidebarIsHidden" ref="sidebar"></sidebar>
-
+<transition name="slide" mode="out-in">
+<sidebar :sources="selectedSources.sources" :issue="selectedSources.issue" @close="closeSources" v-if="sidebarShown" ref="sidebar"></sidebar>
+</transition>
 </div>
 </template>
 
@@ -58,12 +58,11 @@ export default {
   data () {
     return {
       searchText: "",
-      selectedSources: [{name: "Default", link: "http://www.google.com"}],
-      sidebarIsHidden: true,
+      sidebarShown: false,
     }
   },
   created() {
-    console.log(this.$route.params.id)
+    this.$store.dispatch("pullMain")
   },
   components: {
     Category,
@@ -84,20 +83,30 @@ export default {
     },
     feedData () {
     return this.$store.state.feed
+  },
+  selectedSources () {
+    return this.$store.state.selectedSources
   }
   },
   
   methods: {
     goToGenre (genre) {
-      console.log()
-      this.$router.push("/genre/" + genre.toLowerCase())
+      const keyword = genre.toLowerCase()
+      this.$store.dispatch('search', {keyword})
     },
     openSources(sources, title) {
-      this.selectedSources = {sources,title}
-      this.sidebarIsHidden = false
+      this.$store.commit("changeSources", {title, sources})
+      this.sidebarShown = true
     },
     closeSources() {
-      this.sidebarIsHidden = true
+      this.sidebarShown = false
+    },
+    search (event) {
+      const keyword = event.target.querySelector("input").value
+      this.$store.dispatch('search', {keyword})
+      
+      
+
     }
   }
 }
@@ -112,6 +121,7 @@ export default {
   background: white;
 
 }
+
 
 .split {
   display: flex;
@@ -149,6 +159,7 @@ margin:0;
   padding:10px;
 	font-size: 120px;
 	font-weight: 500;
+  color: #5C1787;
 }
 
 h2 {
@@ -185,11 +196,15 @@ h4 {
 }
 
 input {
-  width: 80%;
-  font-size: 50px;
+  min-width: 250px;
+  width: 50%;
+  font-size: 40px;
 	font-weight: 200;
   outline: none;
-  border: none;
+  border: 1px solid rgb(196, 196, 196);
+  border-radius: 30px;
+  padding:10px;
+  padding-left: 30px;
 }
 
 
@@ -200,7 +215,7 @@ input {
 }
 
 .main-story {
-  margin-left: 20px;
+  margin: auto;
   overflow:hidden;
   position: relative;
   text-align: left;
@@ -226,6 +241,7 @@ input {
 }
 .genres {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   padding:20px;
 
@@ -304,6 +320,7 @@ form {
 
 .main-views {
   display:flex;
+  justify-content: center;
   padding:10px
 }
 
@@ -312,5 +329,18 @@ form {
   margin: 5%;
 
 }
+
+/* ANIMATIONS */
+.slide-enter-active, .slide-leave-active {
+  transition:opacity 0.5s
+}
+
+.slide-enter, .slide-leave-to {
+  opacity: 0;
+}
+
+
+
+
 </style>
 
