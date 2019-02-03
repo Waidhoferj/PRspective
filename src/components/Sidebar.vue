@@ -46,7 +46,7 @@ export default {
         width: 30vw;
         min-height: 100vh;
         background: white;
-        box-shadow: -5px 0 5px rgba(0, 0, 0, 0.322);
+        box-shadow: -5px 0 5px rgba(0, 0, 0, 0.158);
 
     }
 
@@ -67,6 +67,7 @@ export default {
     }
 
     .score-circle {
+    transform: translateY(11px);
     display: inline-block;
     margin-left: 10px;
     position: relative;

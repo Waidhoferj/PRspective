@@ -3,7 +3,7 @@
         <div class="pic"> <img :src="storyData.image" alt="img"> </div>
         <div class="story-viewpoints">
             <span class="feed-title"> {{storyData.title}}</span>
-            <span v-for="view in storyData.views" class="feed-view indented"> {{view.description}} <div class="counter-circle" @click="$emit('openSources', view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
+            <span v-for="view in storyData.views" class="feed-view indented">  <div class="side-circle" @click="$emit('openSources', view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div> {{view.description}}</span>
         </div>
 
     </div>
@@ -23,7 +23,7 @@ export default {
         display: flex;
         flex-wrap: wrap;
         width:450px;
-        height: 170px;
+        height: auto;
         padding: 15px;
         overflow: hidden;
         margin-bottom: 50px;
@@ -33,7 +33,7 @@ export default {
     .story .pic {
         position: relative;
         width: 100px;
-        height: 100%;
+        height: 175px;
         border-radius: 30px;
         overflow: hidden;
 
@@ -44,8 +44,9 @@ export default {
         display: block;
         background-size: cover;
         margin:auto;
-        height:200px;
+        height:100%;
         width: auto;
+        height:200px;
     }
 
     .story-viewpoints {

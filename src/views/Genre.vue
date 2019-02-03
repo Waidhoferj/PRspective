@@ -2,7 +2,7 @@
 <div class="view">
     <nav class="genre-head">
         <div class="genre-head-el">
-                    <h1 class="small-app-title" @click="goHome">PRspective</h1>
+                    <h1 class="small-app-title purple" @click="goHome">PRspective</h1>
         </div>
         <div class="genre-head-el search-padding">
             <div class="icon"><img src="../assets/search-icon.svg" alt="search"></div>
@@ -81,6 +81,7 @@ export default {
 }
 
 .genre-title {
+    color:#5C1787;
 	font-size: 100px;
 	font-weight: 500;
 	line-height: 164px;
@@ -111,6 +112,11 @@ export default {
     margin-top: 60px;
     font-size: 40px;
     cursor: pointer;
+    color: #5C1787;
 }
+.purple {
+    color: #5C1787;
+}
+
 </style>
 

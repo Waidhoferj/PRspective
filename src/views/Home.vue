@@ -18,7 +18,7 @@
           <h2>{{mainStory.title}}</h2>
         <div class="main-views">
           <div class="main-view-el" v-for="view in  mainStory.views">
-             <span class="feed-view white"> {{view.description}} <div class="counter-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
+             <span class="feed-view white "> <div class="counter-circle" style="margin-bottom: 5px" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div> {{view.description}} </span>
           </div>
         </div>
         </div>
@@ -36,14 +36,15 @@
   <div class="feed">
     <h4 class="black">Feed</h4>
     <ul class="feed-list">
-    <li v-for="data in feedData" class="feed-list-el">
+      <transition-group name=group-slide>
+    <li v-for="data in feedData" class="feed-list-el" :key="data.title">
       <span class="feed-title">{{data.title}}</span>
-      <span class="feed-view" v-for="view in data.views">{{view.description}} <div class="counter-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div></span>
-
+      <span class="feed-view" style="margin: 0px 20px" v-for="view in data.views" :key="view.description">  <div class="side-circle" @click="openSources(view.sources, view.description)"><span class="counter-num"> {{view.sources.length}} </span></div> {{view.description}}</span>
     </li>
+    </transition-group>
     </ul>
   </div>
-<transition name="slide" mode="out-in">
+<transition name="fade" mode="out-in">
 <sidebar :sources="selectedSources.sources" :issue="selectedSources.issue" @close="closeSources" v-if="sidebarShown" ref="sidebar"></sidebar>
 </transition>
 </div>
@@ -61,8 +62,13 @@ export default {
       sidebarShown: false,
     }
   },
-  created() {
+  mounted() {
     this.$store.dispatch("pullMain")
+    this.$store.dispatch("cycleFeed")
+    console.log("mounted")
+  },
+  beforeDestroy() {
+    this.$store.state.cycleFeed = false
   },
   components: {
     Category,
@@ -144,12 +150,13 @@ export default {
 .feed {
   width: 30%;
   min-height: 100vh;
-  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.322);
+  background-color: whitesmoke;
 }
 
 h1 h2 h3 h4 {
 margin:0;
 }
+
 
 .app-title {
   /* The app title */
@@ -263,12 +270,14 @@ padding: 10px;
   list-style-type: none;
   display: block;
 width: 100%;
-padding: 10px 0;
+
 }
 
+
 .counter-circle {
+  margin: auto;
   cursor: pointer;
-  display: inline-block;
+  display: block;
   position: relative;
   color:white;
   background: green;
@@ -276,6 +285,20 @@ padding: 10px 0;
   width: 30px;
   height: 30px;
   font-size: 20px;
+}
+
+.side-circle {
+        cursor: pointer;
+        display: inline-block;
+        color:white;
+        transform: translateY(10px);
+        
+        background-color: #5C1787;
+        border-radius:  50%;
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        
 }
 
 .counter-num {
@@ -300,12 +323,15 @@ form {
 
 .feed-list {
   padding-left: 0;
+  
 
 }
 .feed-list li {
   list-style-type: none;
   text-align: center;
   padding:10;
+  text-align: left;
+  padding: 0px 20px;
 } 
 
 .feed-list-el::after {
@@ -325,13 +351,26 @@ form {
 }
 
 .main-view-el {
+  text-align: center;
   width: 30%;
   margin: 5%;
 
 }
 
 /* ANIMATIONS */
-.slide-enter-active, .slide-leave-active {
+.fade-enter-active, .fade-leave-active {
+  transition:opacity 0.5s
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active {
+
+}
+
+ .slide-leave-active {
   transition:opacity 0.5s
 }
 
@@ -339,6 +378,14 @@ form {
   opacity: 0;
 }
 
+@keyframes slide-in {
+  to {
+
+  }
+  from {
+    
+  }
+}
 
 
 
