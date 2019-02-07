@@ -1,9 +1,31 @@
 <template>
     <div class="sidebar">
         <div class="icon back-small" @click="close"><img src="@/assets/back-icon.svg" alt="back"></div>
-        <h1 class="sidebar-title">Sources for</h1>
-        <span class="feed-title">{{issue}}</span>
-        <span class="feed-view" v-for="source in sources"> <a :href="source.link"> {{source.name}}</a> <div class="score-circle" :style="{backgroundColor:determineColor(source.score)}"><span class="counter-num"> {{Math.round(source.score *100)/100}} </span></div></span>
+        <div class="sources">
+            <h1 class="sidebar-title">Sources for</h1>
+            <span class="feed-title">{{issue}}</span>
+            <span class="feed-view" v-for="source in sources"> <a :href="source.link"> {{source.name}}</a> <div class="score-circle" :style="{backgroundColor:determineColor(source.score)}"><span class="counter-num"> {{ Math.abs(Math.round(source.score *100)/100)}} </span></div></span>
+        </div>
+        <div class="legend">
+            <h1 class="legend-title">Emotionality</h1>
+            <div class="scale">
+            <div class="scale-section">
+                <div class="score-circle" style="background: green"><span class="counter-num">0</span></div>
+                <p class="scale-label">Low</p>
+            </div>
+            <div class="scale-section">
+                <div class="score-circle" style="background: rgb(190, 190, 49)"><span class="counter-num">0.5</span></div>
+                <p class="scale-label">Medium</p>
+            </div>
+            <div class="scale-section">
+                <div class="score-circle" style="background: red"><span class="counter-num">1</span></div>
+                <p class="scale-label">High</p>
+            </div>
+            </div>
+        </div>
+        
+            
+        
     </div>
 </template>
 
@@ -49,6 +71,29 @@ export default {
         box-shadow: -5px 0 5px rgba(0, 0, 0, 0.158);
 
     }
+    
+    .legend {
+        position: fixed;
+        bottom: 0;
+        width: 30vw;
+        height: 170px;
+    }
+
+    .scale {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+        flex-basis: 30%;
+
+        
+
+    }
+    .scale-label {
+        padding: 20px;
+
+    }
 
     .back-small img {
         width:30px;
@@ -64,6 +109,21 @@ export default {
 
     .sidebar-title {
         font-size: 40px;
+    }
+
+    .legend-title {
+        font-size: 40px;
+        font-weight: 300;
+    }
+    .legend-title::before {
+        content: "";
+        display:block;
+        margin: auto;
+        width: 70%;
+        height: 2px;
+        background:gray;
+        margin-bottom: 10px;
+        border-radius: 5px;
     }
 
     .score-circle {

@@ -93,6 +93,7 @@ export default {
     
  .search-padding {
      padding-top: 60px;
+     padding-bottom: 20px;
     }
 
 .stories {
