@@ -54,12 +54,14 @@
 import Category from "@/components/Category.vue"
 import Sidebar from "@/components/Sidebar.vue"
 
+
 export default {
   name: 'home',
   data () {
     return {
       searchText: "",
       sidebarShown: false,
+      
     }
   },
   mounted() {
@@ -358,6 +360,12 @@ form {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+@media screen and (max-width: 970px) {
+  .app-title {
+    font-size: 85px;
+  }
 }
 
 

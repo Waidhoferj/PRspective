@@ -3,8 +3,32 @@
     <transition name="fade" mode="out-in">
       <router-view class="router"></router-view>
     </transition>
+    <demo-popup v-if="showDemoPopup" @close="showDemoPopup = false"></demo-popup>
   </div>
+  
 </template>
+
+<script>
+import DemoPopup from "@/components/DemoPopup.vue"
+export default {
+  data() {
+    return {
+      showDemoPopup: false
+    }
+
+  },
+  components: {
+    DemoPopup
+  },
+  mounted () {
+    if (this.$route.path == "/") {
+      this.showDemoPopup = true
+    }
+  }
+}
+</script>
+
+
 
 <style>
 * { margin: 0; }
